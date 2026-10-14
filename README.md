@@ -41,6 +41,41 @@ congestion-related reports.
 JavaScript is used where included in the client-side simulation
 interface.
 
+## Screenshots
+
+### Login Page
+![TrafficIQ Login](screenshots/login.png)
+
+### Dashboard
+![TrafficIQ Dashboard](screenshots/dashboard.png)
+
+### Junction Management
+![Junction Management](screenshots/JunctionManagement.png)
+
+### Signal Management
+![Signal Management](screenshots/SignalManagement.png)
+
+### Traffic Simulation
+![Traffic Simulation](screenshots/Simulation.png)
+
+### Traffic Simulation — Part 1
+![Traffic Simulation Part 1](screenshots/SimulationPart1.png)
+
+### Traffic Simulation — Part 2
+![Traffic Simulation Part 2](screenshots/SimulationPart2.png)
+
+### Traffic Reports
+![Traffic Reports](screenshots/TrafficReport.png)
+
+### User Management
+![User Management](screenshots/UserManagement.png)
+
+## Simulation Demo Video
+
+Watch the TrafficIQ simulation in action:
+
+[▶️ View Simulation Demo](screenshots/SimulationWork.mp4)
+
 ## Application Areas
 
 -   Dashboard
