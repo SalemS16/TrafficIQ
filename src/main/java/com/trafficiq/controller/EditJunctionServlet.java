@@ -27,7 +27,7 @@ public class EditJunctionServlet extends HttpServlet {
 
         request.setAttribute("junction", junction);
 
-        request.getRequestDispatcher("editJunction.jsp")
+        request.getRequestDispatcher("/junction/editJunction.jsp")
                 .forward(request, response);
     }
 }

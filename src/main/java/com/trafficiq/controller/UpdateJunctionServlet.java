@@ -22,7 +22,6 @@ public class UpdateJunctionServlet extends HttpServlet {
         junction.setJunctionId(Integer.parseInt(request.getParameter("junctionId")));
         junction.setJunctionName(request.getParameter("junctionName"));
         junction.setArea(request.getParameter("area"));
-        junction.setTotalLanes(Integer.parseInt(request.getParameter("totalLanes")));
         junction.setStatus(request.getParameter("status"));
 
         JunctionDAO dao = new JunctionDAO();

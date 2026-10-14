@@ -21,14 +21,12 @@ public class AddJunctionServlet extends HttpServlet {
 
         String junctionName = request.getParameter("junctionName");
         String area = request.getParameter("area");
-        int totalLanes = Integer.parseInt(request.getParameter("totalLanes"));
         String status = request.getParameter("status");
 
         Junction junction = new Junction();
 
         junction.setJunctionName(junctionName);
         junction.setArea(area);
-        junction.setTotalLanes(totalLanes);
         junction.setStatus(status);
 
         JunctionDAO junctionDAO = new JunctionDAO();

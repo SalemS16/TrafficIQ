@@ -32,7 +32,6 @@ public class JunctionDAO {
                 junction.setJunctionId(rs.getInt("junction_id"));
                 junction.setJunctionName(rs.getString("junction_name"));
                 junction.setArea(rs.getString("area"));
-                junction.setTotalLanes(rs.getInt("total_lanes"));
                 junction.setStatus(rs.getString("status"));
                 junction.setCreatedAt(rs.getString("created_at"));
 
@@ -53,14 +52,15 @@ public class JunctionDAO {
 
             Connection con = DBConnection.getConnection();
 
-            String sql = "INSERT INTO junctions(junction_name, area, total_lanes, status) VALUES (?, ?, ?, ?)";
+            String sql =
+                    "INSERT INTO junctions(junction_name, area, status) " +
+                            "VALUES (?, ?, ?)";
 
             PreparedStatement ps = con.prepareStatement(sql);
 
             ps.setString(1, junction.getJunctionName());
             ps.setString(2, junction.getArea());
-            ps.setInt(3, junction.getTotalLanes());
-            ps.setString(4, junction.getStatus());
+            ps.setString(3, junction.getStatus());
 
             int rows = ps.executeUpdate();
 
@@ -69,7 +69,10 @@ public class JunctionDAO {
             }
 
         } catch (Exception e) {
+
             e.printStackTrace();
+
+            System.out.println("ADD JUNCTION ERROR: " + e.getMessage());
         }
 
         return status;
@@ -97,7 +100,6 @@ public class JunctionDAO {
                 junction.setJunctionId(rs.getInt("junction_id"));
                 junction.setJunctionName(rs.getString("junction_name"));
                 junction.setArea(rs.getString("area"));
-                junction.setTotalLanes(rs.getInt("total_lanes"));
                 junction.setStatus(rs.getString("status"));
                 junction.setCreatedAt(rs.getString("created_at"));
             }
@@ -116,24 +118,28 @@ public class JunctionDAO {
 
             Connection con = DBConnection.getConnection();
 
-            String sql = "UPDATE junctions SET junction_name=?, area=?, total_lanes=?, status=? WHERE junction_id=?";
+            String sql =
+                    "UPDATE junctions " +
+                            "SET junction_name=?, area=?, status=? " +
+                            "WHERE junction_id=?";
 
             PreparedStatement ps = con.prepareStatement(sql);
 
             ps.setString(1, junction.getJunctionName());
             ps.setString(2, junction.getArea());
-            ps.setInt(3, junction.getTotalLanes());
-            ps.setString(4, junction.getStatus());
-            ps.setInt(5, junction.getJunctionId());
+            ps.setString(3, junction.getStatus());
+            ps.setInt(4, junction.getJunctionId());
 
             int rows = ps.executeUpdate();
 
-            if(rows > 0){
+            if (rows > 0) {
                 status = true;
             }
 
         } catch (Exception e) {
+
             e.printStackTrace();
+
         }
 
         return status;
@@ -163,5 +169,29 @@ public class JunctionDAO {
         }
 
         return status;
+    }
+    public int getTotalJunctions() {
+
+        int count = 0;
+
+        try {
+
+            Connection con = DBConnection.getConnection();
+
+            String sql = "SELECT COUNT(*) FROM junctions";
+
+            PreparedStatement ps = con.prepareStatement(sql);
+
+            ResultSet rs = ps.executeQuery();
+
+            if (rs.next()) {
+                count = rs.getInt(1);
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return count;
     }
 }

@@ -26,7 +26,7 @@ public class JunctionServlet extends HttpServlet {
 
         request.setAttribute("junctionList", junctionList);
 
-        request.getRequestDispatcher("junctions.jsp")
+        request.getRequestDispatcher("/junction/junctions.jsp")
                 .forward(request, response);
     }
 }

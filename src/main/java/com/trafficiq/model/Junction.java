@@ -5,7 +5,6 @@ public class Junction {
     private int junctionId;
     private String junctionName;
     private String area;
-    private int totalLanes;
     private String status;
     private String createdAt;
 
@@ -13,11 +12,10 @@ public class Junction {
     }
 
     public Junction(int junctionId, String junctionName, String area,
-                    int totalLanes, String status, String createdAt) {
+                     String status, String createdAt) {
         this.junctionId = junctionId;
         this.junctionName = junctionName;
         this.area = area;
-        this.totalLanes = totalLanes;
         this.status = status;
         this.createdAt = createdAt;
     }
@@ -44,14 +42,6 @@ public class Junction {
 
     public void setArea(String area) {
         this.area = area;
-    }
-
-    public int getTotalLanes() {
-        return totalLanes;
-    }
-
-    public void setTotalLanes(int totalLanes) {
-        this.totalLanes = totalLanes;
     }
 
     public String getStatus() {

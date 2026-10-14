@@ -1,0 +1,555 @@
+/* =====================================================
+   BODY
+===================================================== */
+
+body {
+
+    background: #f4f6f9;
+
+}
+
+
+/* =====================================================
+   SIMULATION CARD
+===================================================== */
+
+.simulation-card {
+
+    overflow: hidden;
+
+}
+
+
+/* =====================================================
+   JUNCTION AREA
+===================================================== */
+
+.junction-area {
+
+    position: relative;
+
+    width: 100%;
+
+    height: 820px;
+
+    min-height: 820px;
+
+    overflow: hidden;
+
+    border-radius: 20px;
+
+    background: #dfe3e8;
+
+}
+
+
+/* =====================================================
+   DYNAMIC ROAD CONTAINER
+===================================================== */
+
+#dynamicRoads {
+
+    position: absolute;
+
+    width: 100%;
+
+    height: 100%;
+
+    top: 0;
+
+    left: 0;
+
+    z-index: 1;
+
+    pointer-events: none;
+
+}
+
+
+/* =====================================================
+   ROAD ARM
+
+   One road per signal.
+===================================================== */
+
+.dynamic-road-arm {
+
+    position: absolute;
+
+    left: 50%;
+
+    top: 50%;
+
+    width: 120px;
+
+    height: 360px;
+
+    background: #555;
+
+    transform-origin: 50% 100%;
+
+    box-sizing: border-box;
+
+    border-left: 5px solid #f8f9fa;
+
+    border-right: 5px solid #f8f9fa;
+
+}
+
+
+/* =====================================================
+   ROAD CENTER DASHED LINE
+===================================================== */
+
+.dynamic-road-arm::after {
+
+    content: "";
+
+    position: absolute;
+
+    top: 0;
+
+    left: 50%;
+
+    width: 4px;
+
+    height: 100%;
+
+    transform:
+        translateX(-50%);
+
+    background-image:
+
+        repeating-linear-gradient(
+
+            to bottom,
+
+            #ffffff 0px,
+
+            #ffffff 30px,
+
+            transparent 30px,
+
+            transparent 58px
+
+        );
+
+}
+
+
+/* =====================================================
+   CENTER DIVIDER
+===================================================== */
+
+.junction-divider {
+
+    position: absolute;
+
+    top: 50%;
+
+    left: 50%;
+
+    width: 170px;
+
+    height: 170px;
+
+    transform:
+        translate(-50%, -50%);
+
+    background: #343a40;
+
+    border: 7px solid #6c757d;
+
+    border-radius: 12px;
+
+    z-index: 4;
+
+    box-shadow:
+        0 5px 20px
+        rgba(0, 0, 0, 0.25);
+
+}
+
+
+/* =====================================================
+   CENTER JUNCTION
+===================================================== */
+
+.junction-center {
+
+    position: absolute;
+
+    top: 50%;
+
+    left: 50%;
+
+    transform:
+        translate(-50%, -50%);
+
+    width: 120px;
+
+    height: 120px;
+
+    border-radius: 50%;
+
+    background: #212529;
+
+    color: white;
+
+    display: flex;
+
+    flex-direction: column;
+
+    justify-content: center;
+
+    align-items: center;
+
+    z-index: 6;
+
+    box-shadow:
+        0 5px 20px
+        rgba(0, 0, 0, 0.35);
+
+}
+
+
+.junction-icon {
+
+    font-size: 34px;
+
+}
+
+
+.junction-center span {
+
+    font-size: 12px;
+
+    font-weight: bold;
+
+    margin-top: 5px;
+
+}
+
+
+/* =====================================================
+   SIGNAL BOX
+
+   Slightly inside the junction.
+===================================================== */
+
+.direction-box.radial-signal {
+
+    position: absolute !important;
+
+    width: 135px !important;
+
+    min-width: 135px !important;
+
+    max-width: 135px !important;
+
+    box-sizing: border-box !important;
+
+    transform:
+        translate(-50%, -50%);
+
+    text-align: center;
+
+    background: #ffffff;
+
+    padding: 8px !important;
+
+    border-radius: 10px;
+
+    box-shadow:
+        0 4px 12px
+        rgba(0, 0, 0, 0.18);
+
+    z-index: 10;
+
+}
+
+
+/* =====================================================
+   TRAFFIC LIGHT
+===================================================== */
+
+.direction-box.radial-signal
+.traffic-light {
+
+    width: 44px !important;
+
+    height: 44px !important;
+
+    border-radius: 50%;
+
+    border: 3px solid #222;
+
+    margin: 0 auto 5px;
+
+    box-shadow:
+        0 0 10px
+        rgba(0, 0, 0, 0.3);
+
+}
+
+
+/* =====================================================
+   TRAFFIC LIGHT COLORS
+===================================================== */
+
+.red {
+
+    background: #dc3545;
+
+}
+
+
+.green {
+
+    background: #28a745;
+
+}
+
+
+.yellow {
+
+    background: #ffc107;
+
+}
+
+
+/* =====================================================
+   SIGNAL HEADING
+===================================================== */
+
+.direction-box.radial-signal h4 {
+
+    font-size: 14px !important;
+
+    font-weight: bold;
+
+    margin: 4px 0 !important;
+
+}
+
+
+/* =====================================================
+   SIGNAL STATUS / TIMER
+===================================================== */
+
+.direction-box.radial-signal p {
+
+    font-size: 11px !important;
+
+    margin: 2px 0 !important;
+
+}
+
+
+/* =====================================================
+   TRAFFIC INFORMATION
+===================================================== */
+
+.direction-box.radial-signal
+.traffic-info {
+
+    margin-top: 6px !important;
+
+    padding: 5px !important;
+
+    border-radius: 6px;
+
+    background: #f4f6f9;
+
+    text-align: left;
+
+    font-size: 10px !important;
+
+    line-height: 1.3 !important;
+
+}
+
+
+/* =====================================================
+   CURRENT PHASE
+===================================================== */
+
+#phase {
+
+    color: #0d6efd;
+
+    font-size: 22px;
+
+    font-weight: bold;
+
+}
+
+
+/* =====================================================
+   TABLET
+===================================================== */
+
+@media (max-width: 900px) {
+
+    .junction-area {
+
+        height: 780px;
+
+        min-height: 780px;
+
+    }
+
+
+    .direction-box.radial-signal {
+
+        width: 125px !important;
+
+        min-width: 125px !important;
+
+        max-width: 125px !important;
+
+    }
+
+
+    .dynamic-road-arm {
+
+        width: 105px;
+
+        height: 340px;
+
+    }
+
+}
+
+
+/* =====================================================
+   MOBILE
+===================================================== */
+
+@media (max-width: 600px) {
+
+    .junction-area {
+
+        height: auto;
+
+        min-height: auto;
+
+        padding: 20px;
+
+        display: flex;
+
+        flex-direction: column;
+
+        align-items: center;
+
+        gap: 20px;
+
+    }
+
+
+    #dynamicRoads {
+
+        display: none;
+
+    }
+
+
+    .junction-divider {
+
+        display: none;
+
+    }
+
+
+    .junction-center {
+
+        position: relative;
+
+        top: auto;
+
+        left: auto;
+
+        transform: none;
+
+    }
+
+
+    .direction-box.radial-signal {
+
+        position: relative !important;
+
+        top: auto !important;
+
+        left: auto !important;
+
+        transform: none;
+
+        width: 100% !important;
+
+        max-width: 280px !important;
+
+    }
+
+}
+
+
+/* =====================================================
+   EMERGENCY ALERT SYSTEM
+   Append this block to the end of simulation.css.
+===================================================== */
+
+#emergencyAlertBanner {
+    border-width: 2px;
+    border-radius: 12px;
+    font-weight: 600;
+    box-shadow: 0 4px 14px rgba(0, 0, 0, 0.12);
+}
+
+#emergencyAlertTitle {
+    display: block;
+    font-size: 1rem;
+    letter-spacing: 0.03em;
+    margin-bottom: 4px;
+}
+
+#emergencyAlertMessage {
+    font-size: 0.95rem;
+    font-weight: 500;
+}
+
+.emergency-lane-message {
+    margin-top: 5px;
+    padding: 5px 6px;
+    border-radius: 6px;
+    background: #fff3cd;
+    color: #842029;
+    font-size: 10px;
+    font-weight: 700;
+    line-height: 1.3;
+}
+
+.emergency-lane-message.text-success {
+    background: #d1e7dd;
+    color: #0f5132 !important;
+}
+
+.emergency-lane-message.text-danger {
+    background: #f8d7da;
+    color: #842029 !important;
+}
+
+.emergency-lane-message.text-secondary {
+    background: #e2e3e5;
+    color: #41464b !important;
+}
+/* Append these rules to the existing css/simulation.css. */
+.traffic-light.blink-yellow {
+    background-color: #f1c40f !important;
+    box-shadow: 0 0 12px rgba(241, 196, 15, 0.9);
+    animation: trafficiq-yellow-blink 1s steps(2, start) infinite;
+}
+
+@keyframes trafficiq-yellow-blink {
+    0%, 49% { opacity: 1; }
+    50%, 100% { opacity: 0.25; }
+}

@@ -40,7 +40,7 @@ public class LoginServlet extends HttpServlet {
                     user);
 
             response.sendRedirect(
-                    "dashboard.jsp");
+                    "dashboard");
 
         } else {
 
