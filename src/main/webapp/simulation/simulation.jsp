@@ -76,11 +76,24 @@
     >
 
 
-    <!-- CACHE BUSTING -->
-    <link
-            rel="stylesheet"
-            href="<%= request.getContextPath() %>/css/simulation.css?v=12"
-    >
+    <!-- Existing simulation stylesheet retained -->
+    <link rel="stylesheet" href="<%= request.getContextPath() %>/css/simulation.css?v=12">
+    <style>
+
+        .tiq-navbar { min-height:76px; padding:15px 5%; background:#101318; color:#fff; display:flex; align-items:center; justify-content:space-between; gap:18px; flex-wrap:wrap; box-shadow:0 4px 18px rgba(0,0,0,.12); }
+        .tiq-brand { display:flex; align-items:center; gap:12px; color:#fff; font-size:23px; font-weight:750; letter-spacing:-.6px; text-decoration:none; }
+        .tiq-brand-icon { width:42px; height:42px; display:flex; align-items:center; justify-content:center; border-radius:12px; background:#252a33; font-size:22px; }
+        .tiq-brand span { color:#b8c0cc; }
+        .tiq-nav-actions { display:flex; align-items:center; gap:10px; flex-wrap:wrap; }
+        .tiq-nav-btn { min-height:42px; padding:11px 17px; display:inline-flex; align-items:center; justify-content:center; gap:8px; border:1px solid #414753; border-radius:9px; background:#111827; color:#fff; text-decoration:none; font:inherit; font-size:13px; font-weight:650; cursor:pointer; transition:background .2s,transform .2s,box-shadow .2s; }
+        .tiq-nav-btn:hover { background:#000; color:#fff; transform:translateY(-1px); box-shadow:0 5px 12px rgba(0,0,0,.16); }
+        @media(max-width:600px) { .tiq-navbar { padding:14px 4%; } .tiq-brand { font-size:20px; } }
+
+        body { font-family:"Segoe UI",Arial,sans-serif; }
+        .simulation-page-title { font-weight:750; letter-spacing:-.6px; color:#111827; }
+        .simulation-main { width:94%; max-width:1700px; margin:30px auto 48px; }
+        @media(max-width:600px) { .simulation-main { width:94%; padding-left:0!important; padding-right:0!important; } }
+    </style>
 
 </head>
 
@@ -92,28 +105,14 @@
      NAVBAR
 ===================================================== -->
 
-<nav class="navbar navbar-dark bg-dark">
-
-    <div class="container-fluid">
-
-        <span class="navbar-brand">
-
-            🚦 TrafficIQ
-
-        </span>
-
-
-        <a
-                href="<%= request.getContextPath() %>/dashboard"
-                class="btn btn-outline-light"
-        >
-
-            Back to Dashboard
-
-        </a>
-
+<nav class="tiq-navbar">
+    <a class="tiq-brand" href="<%= request.getContextPath() %>/dashboard" style="color:#fff;text-decoration:none">
+        <span class="tiq-brand-icon">&#128678;</span>
+        <span style="color:#fff">Traffic<span>IQ</span></span>
+    </a>
+    <div class="tiq-nav-actions">
+        <a href="<%= request.getContextPath() %>/dashboard" class="tiq-nav-btn">&#8592; Back to Dashboard</a>
     </div>
-
 </nav>
 
 
@@ -121,10 +120,10 @@
      MAIN CONTAINER
 ===================================================== -->
 
-<div class="container-fluid px-4 mt-4">
+<div class="container-fluid px-4 mt-4 simulation-main">
 
 
-    <h2 class="mb-4">
+    <h2 class="mb-4 simulation-page-title">
 
         Traffic Simulation
 
@@ -743,4 +742,3 @@
 </body>
 
 </html>
-

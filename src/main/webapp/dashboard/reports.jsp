@@ -26,8 +26,24 @@
     <title>TrafficIQ | Reports</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <style>
-        body { background:#f4f6f9; color:#212529; }
-        .topbar { background:#212529; }
+        body { background:#f3f5f9; color:#172033; font-family:"Segoe UI",Arial,sans-serif; }
+        .topbar { background:#101318; }
+
+        .tiq-navbar { min-height:76px; padding:15px 5%; background:#101318; color:#fff; display:flex; align-items:center; justify-content:space-between; gap:18px; flex-wrap:wrap; box-shadow:0 4px 18px rgba(0,0,0,.12); }
+        .tiq-brand { display:flex; align-items:center; gap:12px; color:#fff; font-size:23px; font-weight:750; letter-spacing:-.6px; text-decoration:none; }
+        .tiq-brand-icon { width:42px; height:42px; display:flex; align-items:center; justify-content:center; border-radius:12px; background:#252a33; font-size:22px; }
+        .tiq-brand span { color:#b8c0cc; }
+        .tiq-nav-actions { display:flex; align-items:center; gap:10px; flex-wrap:wrap; }
+        .tiq-nav-btn { min-height:42px; padding:11px 17px; display:inline-flex; align-items:center; justify-content:center; gap:8px; border:1px solid #414753; border-radius:9px; background:#111827; color:#fff; text-decoration:none; font:inherit; font-size:13px; font-weight:650; cursor:pointer; transition:background .2s,transform .2s,box-shadow .2s; }
+        .tiq-nav-btn:hover { background:#000; color:#fff; transform:translateY(-1px); box-shadow:0 5px 12px rgba(0,0,0,.16); }
+        @media(max-width:600px) { .tiq-navbar { padding:14px 4%; } .tiq-brand { font-size:20px; } }
+
+        .btn-dark-theme { background:#111827; border-color:#111827; color:#fff; }
+        .btn-dark-theme:hover { background:#000; border-color:#000; color:#fff; }
+        .page-title { font-weight:750; letter-spacing:-.7px; }
+        .panel { border:1px solid #e6eaf0; border-radius:16px; box-shadow:0 5px 20px rgba(15,23,42,.04); }
+        .report-footer { padding:22px 10px 0; color:#94a3b8; text-align:center; font-size:12px; }
+
         .panel { border:0; border-radius:16px; box-shadow:0 4px 15px rgba(0,0,0,.07); }
         .metric { font-size:30px; font-weight:750; }
         .muted-label { color:#6c757d; font-size:13px; font-weight:650; text-transform:uppercase; letter-spacing:.4px; }
@@ -45,17 +61,20 @@
     </style>
 </head>
 <body>
-<nav class="navbar navbar-dark topbar">
-    <div class="container-fluid px-4">
-        <a class="navbar-brand" href="<%= context %>/dashboard">🚦 TrafficIQ</a>
-        <a class="btn btn-outline-light btn-sm" href="<%= context %>/dashboard">← Dashboard</a>
+<nav class="tiq-navbar topbar">
+    <a class="tiq-brand" href="<%= context %>/dashboard">
+        <span class="tiq-brand-icon">&#128678;</span>
+        <span style="color:#fff">Traffic<span>IQ</span></span>
+    </a>
+    <div class="tiq-nav-actions">
+        <a class="tiq-nav-btn" href="<%= context %>/dashboard">&#8592; Back to Dashboard</a>
     </div>
 </nav>
 
 <main class="container py-4">
     <div class="d-flex flex-wrap justify-content-between align-items-start gap-3 mb-4">
         <div>
-            <h1 class="fw-bold mb-1">Traffic Reports</h1>
+            <h1 class="page-title mb-1">Traffic Reports</h1>
             <p class="text-muted mb-0">Live simulation snapshot · Generated <%= request.getAttribute("snapshotTime") %></p>
         </div>
         <a class="btn btn-success" href="<%= context %>/reports?format=csv<%= selectedJunctionId == null ? "" : "&junctionId=" + selectedJunctionId %>">⬇ Export CSV</a>
@@ -144,6 +163,7 @@
             </table>
         </div>
     </section>
+    <footer class="report-footer">TrafficIQ &bull; Smart Traffic Signal Optimization</footer>
 </main>
 </body>
 </html>

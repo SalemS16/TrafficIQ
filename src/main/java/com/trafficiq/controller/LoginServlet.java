@@ -1,3 +1,4 @@
+
 package com.trafficiq.controller;
 
 import com.trafficiq.dao.UserDAO;
@@ -5,12 +6,41 @@ import com.trafficiq.model.User;
 
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
-import jakarta.servlet.http.*;
+import jakarta.servlet.http.HttpServlet;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
 
 import java.io.IOException;
 
 @WebServlet("/login")
 public class LoginServlet extends HttpServlet {
+
+    private UserDAO userDAO;
+
+    @Override
+    public void init() {
+        userDAO = new UserDAO();
+    }
+
+    @Override
+    protected void doGet(
+            HttpServletRequest request,
+            HttpServletResponse response)
+            throws ServletException, IOException {
+
+        response.setHeader("Cache-Control", "no-store");
+
+        HttpSession session = request.getSession(false);
+        if (session != null && session.getAttribute("loggedUser") != null) {
+            response.sendRedirect(
+                    request.getContextPath() + "/dashboard");
+            return;
+        }
+
+        request.getRequestDispatcher("/login.jsp")
+                .forward(request, response);
+    }
 
     @Override
     protected void doPost(
@@ -18,35 +48,41 @@ public class LoginServlet extends HttpServlet {
             HttpServletResponse response)
             throws ServletException, IOException {
 
-        String username =
-                request.getParameter("username");
+        request.setCharacterEncoding("UTF-8");
+        response.setHeader("Cache-Control", "no-store");
 
-        String password =
-                request.getParameter("password");
+        String username = request.getParameter("username");
+        String password = request.getParameter("password");
 
-        UserDAO userDAO =
-                new UserDAO();
+        if (username == null || username.isBlank()
+                || password == null || password.isEmpty()) {
 
-        User user =
-                userDAO.login(username, password);
+            request.setAttribute(
+                    "errorMessage",
+                    "Please enter your username and password.");
 
-        if(user != null) {
-
-            HttpSession session =
-                    request.getSession();
-
-            session.setAttribute(
-                    "loggedUser",
-                    user);
-
-            response.sendRedirect(
-                    "dashboard");
-
-        } else {
-
-            response.getWriter().println(
-                    "Invalid Username or Password");
-
+            request.getRequestDispatcher("/login.jsp")
+                    .forward(request, response);
+            return;
         }
+
+        User user = userDAO.login(username.trim(), password);
+
+        if (user == null) {
+            request.setAttribute(
+                    "errorMessage",
+                    "Invalid username or password.");
+
+            request.getRequestDispatcher("/login.jsp")
+                    .forward(request, response);
+            return;
+        }
+
+        HttpSession session = request.getSession(true);
+        request.changeSessionId();
+        session.setAttribute("loggedUser", user);
+
+        response.sendRedirect(
+                request.getContextPath() + "/dashboard");
     }
 }

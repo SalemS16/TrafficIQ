@@ -1,316 +1,186 @@
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
-
-<%@ page import="java.util.List" %>
+<%@ page contentType="text/html;charset=UTF-8" language="java" %><%@ page import="java.util.List" %>
 <%@ page import="com.trafficiq.model.Junction" %>
 <%@ page import="com.trafficiq.model.Signal" %>
-
-<%
-    Junction junction =
-            (Junction) request.getAttribute("junction");
-
-    List<Signal> existingSignals =
-            (List<Signal>) request.getAttribute("existingSignals");
-%>
-
+<% Junction junction=(Junction)request.getAttribute("junction"); List<Signal> existingSignals=(List<Signal>)request.getAttribute("existingSignals"); %>
 <!DOCTYPE html>
-
-<html>
-
-<head>
-
-    <meta charset="UTF-8">
-
-    <title>Add Signal - TrafficIQ</title>
-
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
-          rel="stylesheet">
-
-</head>
-
-
-<body class="bg-light">
-
-
-<!-- NAVBAR -->
-
-<nav class="navbar navbar-dark bg-dark">
-
-    <div class="container-fluid px-4">
-
-        <span class="navbar-brand mb-0 h1">
-
-            🚦 TrafficIQ
-
-        </span>
-
-
-        <a href="logout"
-           class="btn btn-outline-light">
-
-            Logout
-
-        </a>
-
-    </div>
-
-</nav>
-
-
-
-<div class="container mt-5">
-
-
-    <div class="card shadow border-0">
-
-
-        <div class="card-header bg-success text-white">
-
-            <h3 class="mb-0">
-
-                🚦 Add Signal
-
-            </h3>
-
-        </div>
-
-
-
-        <div class="card-body">
-
-
-            <!-- CURRENT JUNCTION -->
-
-            <h5 class="mb-4">
-
-                Junction:
-
-                <strong>
-
-                    <%= junction.getJunctionName() %>
-
-                </strong>
-
-            </h5>
-
-
-
-            <form action="addSignal"
-                  method="post">
-
-
-                <!-- JUNCTION ID -->
-
-                <input type="hidden"
-                       name="junctionId"
-                       value="<%= junction.getJunctionId() %>">
-
-
-                <!-- DIRECTION -->
-
-                <div class="mb-3">
-
-                    <label class="form-label">
-
-                        Direction
-
-                    </label>
-
-
-                    <select name="direction"
-                            class="form-select"
-                            required>
-
-
-                        <option value="">
-
-                            -- Select Direction --
-
-                        </option>
-
-
-<%
-    String[] directions = {
-
-            "NORTH",
-            "SOUTH",
-            "EAST",
-            "WEST",
-            "NORTH EAST",
-            "NORTH WEST",
-            "SOUTH EAST",
-            "SOUTH WEST"
-
-    };
-
-
-    for (String direction : directions) {
-
-        boolean alreadyExists = false;
-
-
-        if (existingSignals != null) {
-
-            for (Signal signal : existingSignals) {
-
-                if (direction.equalsIgnoreCase(
-                        signal.getDirection()
-                )) {
-
-                    alreadyExists = true;
-
-                    break;
-                }
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>Add Signal - TrafficIQ</title>
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+        <style>
+            body{
+            background:#f3f5f9;
+            color:#172033;
+            font-family:"Segoe UI",Arial,sans-serif}
+            .tiq-navbar{
+            min-height:76px;
+            padding:15px 5%;
+            background:#101318;
+            color:#fff;
+            display:flex;
+            align-items:center;
+            justify-content:space-between;
+            gap:18px;
+            flex-wrap:wrap;
+            box-shadow:0 4px 18px rgba(0,0,0,.12)}
+            .tiq-brand{
+            display:flex;
+            align-items:center;
+            gap:12px;
+            color:#fff;
+            font-size:23px;
+            font-weight:750;
+            letter-spacing:-.6px;
+            text-decoration:none}
+            .tiq-brand-icon{
+            width:42px;
+            height:42px;
+            display:flex;
+            align-items:center;
+            justify-content:center;
+            border-radius:12px;
+            background:#252a33;
+            font-size:22px}
+            .tiq-brand:hover{
+            color:#fff}
+            .tiq-brand-muted{
+            color:#b8c0cc}
+            .tiq-nav-btn{
+            min-height:42px;
+            padding:11px 17px;
+            display:inline-flex;
+            align-items:center;
+            justify-content:center;
+            border:1px solid #414753;
+            border-radius:9px;
+            background:#111827;
+            color:#fff;
+            text-decoration:none;
+            font-size:13px;
+            font-weight:650;
+            transition:.2s}
+            .tiq-nav-btn:hover{
+            background:#000;
+            color:#fff;
+            transform:translateY(-1px)}
+            .page-main{
+            width:min(1200px,92%);
+            margin:36px auto 55px}
+            .form-card,.content-card{
+            overflow:hidden;
+            border:1px solid #e6eaf0;
+            border-radius:16px;
+            background:#fff;
+            box-shadow:0 5px 20px rgba(15,23,42,.06)}
+            .form-card-header{
+            padding:20px 25px;
+            background:#101318;
+            color:#fff}
+            .form-card-header h1{
+            margin:0;
+            font-size:26px;
+            font-weight:750}
+            .form-card-body{
+            padding:25px}
+            .form-label{
+            font-size:14px;
+            font-weight:650;
+            color:#374151}
+            .form-control,.form-select{
+            min-height:46px;
+            border:1px solid #d5dbe5;
+            border-radius:9px;
+            font-size:14px}
+            .form-control:focus,.form-select:focus{
+            border-color:#6b7280;
+            box-shadow:0 0 0 3px rgba(17,24,39,.08)}
+            .btn{
+            border-radius:9px;
+            padding:10px 16px;
+            font-size:14px;
+            font-weight:600}
+            .table thead th{
+            background:#212529;
+            color:#fff;
+            white-space:nowrap}
+            .table td{
+            vertical-align:middle}
+            .page-footer{
+            padding:22px 10px 0;
+            color:#94a3b8;
+            text-align:center;
+            font-size:12px}
+            @media(max-width:600px){
+            .tiq-navbar{
+            padding:14px 4%}
+            .tiq-brand{
+            font-size:20px}
+            .page-main{
+            width:94%;
+            margin-top:22px}
+            .form-card-body{
+            padding:19px}
             }
-        }
-
-
-        if (!alreadyExists) {
-%>
-
-                        <option value="<%= direction %>">
-
-                            <%= direction %>
-
-                        </option>
-
-<%
-        }
-    }
-%>
-
-
-                    </select>
-
-                </div>
-
-
-
-                <!-- GREEN TIME -->
-
-                <div class="mb-3">
-
-                    <label class="form-label">
-
-                        Default Green Time (Seconds)
-
-                    </label>
-
-
-                    <input type="number"
-                           name="greenTime"
-                           class="form-control"
-                           value="30"
-                           min="5"
-                           required>
-
-                </div>
-
-
-
-                <!-- YELLOW TIME -->
-
-                <div class="mb-3">
-
-                    <label class="form-label">
-
-                        Yellow Time (Seconds)
-
-                    </label>
-
-
-                    <input type="number"
-                           name="yellowTime"
-                           class="form-control"
-                           value="5"
-                           min="3"
-                           required>
-
-                </div>
-
-
-
-                <!-- RED TIME -->
-
-                <div class="mb-4">
-
-                    <label class="form-label">
-
-                        Default Red Time (Seconds)
-
-                    </label>
-
-
-                    <input type="number"
-                           name="redTime"
-                           class="form-control"
-                           value="30"
-                           min="5"
-                           required>
-
-                </div>
-
-
-
-                <!-- STATUS -->
-
-                <div class="mb-4">
-
-                    <label class="form-label">
-
-                        Status
-
-                    </label>
-
-
-                    <select name="status"
-                            class="form-select">
-
-                        <option value="ACTIVE">
-
-                            ACTIVE
-
-                        </option>
-
-                        <option value="INACTIVE">
-
-                            INACTIVE
-
-                        </option>
-
-                    </select>
-
-                </div>
-
-
-
-                <!-- ACTION BUTTONS -->
-
-                <button type="submit"
-                        class="btn btn-success">
-
-                    Save Signal
-
-                </button>
-
-
-                <a href="junctionSignals?junctionId=<%= junction.getJunctionId() %>"
-                   class="btn btn-secondary">
-
-                    ← Back to Signals
-
-                </a>
-
-
-            </form>
-
-        </div>
-
-    </div>
-
-
+        </style>
+</head>
+<body>
+    <nav class="tiq-navbar">
+        <a class="tiq-brand" href="<%= request.getContextPath() %>/dashboard">
+            <span class="tiq-brand-icon" aria-hidden="true">&#128678;</span>
+            <span style="color:#fff">Traffic<span class="tiq-brand-muted">IQ</span>
+            </span>
+    </a>
+<a class="tiq-nav-btn" href="<%= request.getContextPath() %>/junctionSignals?junctionId=<%= junction.getJunctionId() %>">&#8592; Back to Signals</a>
+</nav>
+<main class="page-main">
+    <section class="form-card">
+        <header class="form-card-header">
+            <h1>&#128678; Add Signal</h1>
+        </header>
+    <div class="form-card-body">
+        <h5 class="mb-4">Junction: <strong>
+                <%= junction.getJunctionName() %>
+            </strong>
+    </h5>
+<form action="<%= request.getContextPath() %>/addSignal" method="post">
+    <input type="hidden" name="junctionId" value="<%= junction.getJunctionId() %>">
+    <div class="mb-4">
+        <label class="form-label" for="direction">Direction</label>
+        <select id="direction" name="direction" class="form-select" required>
+            <option value="">-- Select Direction --</option>
+            <% String[] directions={"NORTH","SOUTH","EAST","WEST","NORTH EAST","NORTH WEST","SOUTH EAST","SOUTH WEST"}; for(String direction:directions){ boolean alreadyExists=false; if(existingSignals!=null){for(Signal signal:existingSignals){if(direction.equalsIgnoreCase(signal.getDirection())){alreadyExists=true;break;}}} if(!alreadyExists){ %>
+            <option value="<%= direction %>">
+                <%= direction %>
+            </option>
+    <% }} %>
+</select>
 </div>
-
-
+<div class="mb-4">
+    <label class="form-label" for="greenTime">Default Green Time (Seconds)</label>
+    <input id="greenTime" type="number" name="greenTime" class="form-control" value="30" min="5" required>
+</div>
+<div class="mb-4">
+    <label class="form-label" for="yellowTime">Yellow Time (Seconds)</label>
+    <input id="yellowTime" type="number" name="yellowTime" class="form-control" value="5" min="3" required>
+</div>
+<div class="mb-4">
+    <label class="form-label" for="redTime">Default Red Time (Seconds)</label>
+    <input id="redTime" type="number" name="redTime" class="form-control" value="30" min="5" required>
+</div>
+<div class="mb-4">
+    <label class="form-label" for="status">Status</label>
+    <select id="status" name="status" class="form-select">
+        <option value="ACTIVE">ACTIVE</option>
+        <option value="INACTIVE">INACTIVE</option>
+    </select>
+</div>
+<button type="submit" class="btn btn-success">Save Signal</button>
+</form>
+</div>
+</section>
+<footer class="page-footer">TrafficIQ &bull; Smart Traffic Signal Optimization</footer>
+</main>
 </body>
-
 </html>

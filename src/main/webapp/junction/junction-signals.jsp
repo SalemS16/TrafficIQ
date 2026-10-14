@@ -20,6 +20,8 @@
 
     <meta charset="UTF-8">
 
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
     <title>
         <%= junction.getJunctionName() %> - TrafficIQ
     </title>
@@ -29,23 +31,25 @@
             rel="stylesheet">
 
     <style>
-
-        .junction-header {
-            background: white;
-            border-radius: 12px;
-            padding: 25px;
-        }
-
-        .signal-count {
-            font-size: 14px;
-        }
-
-        .action-buttons {
-            display: flex;
-            gap: 8px;
-            flex-wrap: wrap;
-        }
-
+        body { background:#f3f5f9; color:#172033; font-family:"Segoe UI",Arial,sans-serif; }
+        .tiq-navbar { min-height:76px; padding:15px 5%; background:#101318; color:#fff; display:flex; align-items:center; justify-content:space-between; gap:18px; flex-wrap:wrap; box-shadow:0 4px 18px rgba(0,0,0,.12); }
+        .tiq-brand { display:flex; align-items:center; gap:12px; color:#fff; font-size:23px; font-weight:750; letter-spacing:-.6px; text-decoration:none; }
+        .tiq-brand-icon { width:42px; height:42px; display:flex; align-items:center; justify-content:center; border-radius:12px; background:#252a33; font-size:22px; }
+        .tiq-brand span { color:#b8c0cc; }
+        .tiq-nav-actions { display:flex; align-items:center; gap:10px; flex-wrap:wrap; }
+        .tiq-nav-btn { min-height:42px; padding:11px 17px; display:inline-flex; align-items:center; justify-content:center; gap:8px; border:1px solid #414753; border-radius:9px; background:#111827; color:#fff; text-decoration:none; font:inherit; font-size:13px; font-weight:650; cursor:pointer; transition:background .2s,transform .2s,box-shadow .2s; }
+        .tiq-nav-btn:hover { background:#000; color:#fff; transform:translateY(-1px); box-shadow:0 5px 12px rgba(0,0,0,.16); }
+        .junction-main { width:min(1500px,94%); margin:30px auto 50px; }
+        .junction-header { background:#fff; border:1px solid #e6eaf0; border-radius:16px; padding:25px; box-shadow:0 4px 15px rgba(0,0,0,.07); }
+        .signal-count { font-size:13px; padding:8px 12px; border-radius:9px; }
+        .action-buttons { display:flex; gap:8px; flex-wrap:wrap; }
+        .section-title { font-weight:750; letter-spacing:-.5px; }
+        .signal-card { overflow:hidden; border:0; border-radius:16px; box-shadow:0 4px 15px rgba(0,0,0,.07); }
+        .table thead th { background:#212529; color:white; white-space:nowrap; }
+        .table td { vertical-align:middle; }
+        .junction-status { font-size:12px; font-weight:700; padding:6px 10px; border-radius:8px; }
+        .junction-footer { padding:22px 10px 0; color:#94a3b8; text-align:center; font-size:12px; }
+        @media(max-width:600px) { .tiq-navbar { padding:14px 4%; } .tiq-brand { font-size:20px; } .junction-main { width:94%; margin-top:22px; } .junction-header { padding:19px; } }
     </style>
 
 </head>
@@ -56,50 +60,24 @@
 
 <!-- NAVBAR -->
 
-<nav class="navbar navbar-dark bg-dark">
-
-    <div class="container-fluid px-4">
-
-        <span class="navbar-brand mb-0 h1">
-
-            🚦 TrafficIQ
-
-        </span>
-
-       <a href="<%= request.getContextPath() %>/logout"
-          class="btn btn-outline-light">
-
-           Logout
-
-       </a>
-
+<nav class="tiq-navbar">
+    <a class="tiq-brand" href="<%= request.getContextPath() %>/dashboard">
+        <span class="tiq-brand-icon" aria-hidden="true">&#128678;</span>
+        <span style="color:#fff">Traffic<span>IQ</span></span>
+    </a>
+    <div class="tiq-nav-actions">
+        <a class="tiq-nav-btn" href="<%= request.getContextPath() %>/junctions">&#8592; Back to Junctions</a>
     </div>
-
 </nav>
 
 
 
-<div class="container mt-5">
-
-
-    <!-- BACK -->
-
-    <div class="mb-3">
-
-        <a href="<%= request.getContextPath() %>/junctions"
-           class="text-decoration-none">
-
-            ← Back to Junctions
-
-        </a>
-
-    </div>
-
+<main class="junction-main">
 
 
     <!-- JUNCTION HEADER -->
 
-    <div class="junction-header shadow-sm mb-4">
+    <div class="junction-header mb-4">
 
 
         <div class="d-flex justify-content-between
@@ -110,7 +88,7 @@
 
             <div>
 
-                <h2 class="mb-1">
+                <h2 class="section-title mb-1">
 
                     🚦 <%= junction.getJunctionName() %>
 
@@ -129,7 +107,7 @@
                             junction.getStatus())) {
                 %>
 
-                    <span class="badge bg-success">
+                    <span class="badge bg-success junction-status">
 
                         ACTIVE
 
@@ -139,7 +117,7 @@
                     } else {
                 %>
 
-                    <span class="badge bg-secondary">
+                    <span class="badge bg-secondary junction-status">
 
                         INACTIVE
 
@@ -202,7 +180,7 @@
 
         <div>
 
-            <h3 class="mb-0">
+            <h3 class="section-title mb-0">
 
                 🚦 Signals
 
@@ -241,7 +219,7 @@
 
     <!-- SIGNAL TABLE -->
 
-    <div class="card shadow-sm border-0">
+    <div class="card signal-card">
 
 
         <div class="card-body p-0">
@@ -498,8 +476,8 @@
     </div>
 
 
-</div>
-
+    <div class="junction-footer">TrafficIQ &bull; Smart Traffic Signal Optimization</div>
+</main>
 
 </body>
 
