@@ -70,7 +70,9 @@ interface.
 ### User Management
 ![User Management](screenshots/UserManagement.png)
 
-### Traffic Simulation Demo
+### Overall Working Demo
+
+Watch the Overall Working in action:
 
 [Watch the Overall Working Demo](screenshots/OverallWorking.mp4)
 
