@@ -70,6 +70,10 @@ interface.
 ### User Management
 ![User Management](screenshots/UserManagement.png)
 
+### Traffic Simulation Demo
+
+[Watch the Overall Working Demo](screenshots/OverallWorking.mp4)
+
 ## Simulation Demo Video
 
 Watch the TrafficIQ simulation in action:
